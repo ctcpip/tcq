@@ -39,3 +39,27 @@ Currently adapters are pretty simple, they just have to export a set of function
 * You can easily provide a local MongoDB instance via `docker compose` as well, simply uncomment `TCQ_SESSION_STORE_*` and `TCQ_DB_*`  (see above for adapters)
 
 If you have a proper build **and** database (e.g. `docker compose up db`), you can then run a dev container with `docker compose up dev` and access the application at `http://localhost:3000`.
+
+## Deployment
+
+### AWS
+#### Using AWS Copilot
+You can use [AWS Copilot](https://aws.github.io/copilot-cli/) to deploy the application to AWS, this will create a new ECS service with a load balancer and all the necessary resources. You can follow the [AWS Copilot documentation](https://aws.github.io/copilot-cli/docs/) for more information on how to set it up. Once setup, some secrets need to be set in the AWS Secrets Manager, these are:
+
+* `TCQ_GH_SECRET` - the GitHub OAuth client secret
+* `TCQ_SESSION_SECRET` - the session secret for signing cookies
+* `TCQ_GH_ID` - the GitHub OAuth client ID
+
+**and** because currently the _copilot application_ is configured (in [./copilot/tcq/manifest.yml](./copilot/tcq/manifest.yml)) to use MongoDB as the database, you also need to set the following secrets:
+* `TCQ_DB_MONGODB_URI` - must be a MongoDB URI for connecting to the database
+* `TCQ_SESSION_STORE_MONGODB_URI` - must be a MongoDB URI for connecting to the session store
+
+They can be set via the AWS Copilot CLI with the following commands:
+```bash
+copilot secret init --name TCQ_GH_SECRET
+copilot secret init --name TCQ_SESSION_SECRET
+copilot secret init --name TCQ_GH_ID
+copilot secret init --name TCQ_DB_MONGODB_URI
+copilot secret init --name TCQ_SESSION_STORE_MONGODB_URI
+```
+> **N.B.** Currently the supplied [./copilot/tcq/manifest.yml](./copilot/tcq/manifest.yml) is hard-coded to deploy at `tcq.ninja`, if you want to deploy it to a different domain, you need to change the manifest file accordingly.
