@@ -1,10 +1,12 @@
 services:
   builder:
-    image: tc39/tcq-builder
+    image: tc39/tcq-reloaded-builder
     build:
       dockerfile: builder.Dockerfile
     volumes:
       - ./:/opt/build
+    entrypoint: ["/usr/bin/npm"]
+
   dev:
     image: node:10.19-slim
     volumes:

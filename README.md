@@ -31,8 +31,22 @@ Currently adapters are pretty simple, they just have to export a set of function
 ## Local Development Setup
 
 ### Building
+You either need a _build-enabled_ Node 10.19.0 or you can use the provided _dockerized_ _builder_ to build the application. The latter is recommended, as it will ensure that the build works in a consistent environment.
 
-`docker compose run --rm -i builder /bin/bash` and then run `npm i && npm run postinstall && npm run build-frontend && npm run build-backend` to easily build the application in a containerized environment, _alternatively_ you can run this locally if you manage to find the right Node.js version (currently 10.19) and the right dependencies, but this is not recommended (i.e. not tested).
+For initially building the _builder_ (quis custodiet ipsos custodes), simply run `docker compose build builder`, this will create `tc39/tcq-reloaded-builder` that has all the necessary dependencies to build the application and enable the following commands to work:
+
+* `npm run docker:npm` - runs `npm` in the builder container, so you can run any npm command inside the container
+* `npm run docker:build-frontend` - builds the frontend application
+* `npm run docker:build-backend` - builds the backend application
+* `npm run docker:build-production` - builds both the frontend and backend applications for production
+
+For actually building the application, you need to run the following commands:
+
+```bash
+npm run docker:npm install
+npm run docker:npm run postinstall
+npm run docker:build-production
+```
 
 ### Running locally
 * You need a GitHub OAuth app with `clientId` and `clientSecret`, these need to be set in `.env-development` that you can copy over from `.env-template` and set `TCQ_LOCAL_GH_SECRET`, `TCQ_LOCAL_GH_ID` and `TCQ_SESSION_SECRET`. Its `callbackUrl` _should_ be set to `http://localhost:3000/auth/github/callback`.
