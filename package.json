@@ -11,7 +11,7 @@
     "build-frontend": "webpack --config ./src/client/webpack.dev.js",
     "build-frontend-watch": "webpack --watch --config ./src/client/webpack.dev.js",
     "build-backend": "tsc -p ./src/server",
-    "postbuild-backend": "cp -f ./src/server/adapters/db/mongodb.db.adapter.js dist/server/adapters/db/mongodb.db.adapter.js && cp -f ./src/server/adapters/session-store/mongodb.session-store.adapter.js dist/server/adapters/session-store/mongodb.session-store.adapter.js",
+    "postbuild-backend": "cp -f ./src/server/adapters/db/*.db.adapter.js dist/server/adapters/db/ && cp -f ./src/server/adapters/session-store/*.session-store.adapter.js dist/server/adapters/session-store/",
     "build-production": "npm run build-backend && webpack -p --config ./src/client/webpack.prod.js",
     "iterate": "npm run build-backend && concurrently \"npm run build-frontend-watch\" \"node ./dist/server/server.js\"",
     "start": "node dist/server/server.js | \"./node_modules/.bin/bunyan\"",
@@ -33,6 +33,7 @@
     "node": "10.19.0"
   },
   "dependencies": {
+    "aws-sdk": "2.1692.0",
     "axios": "0.16.2",
     "base64-url": "2.0.0",
     "body-parser": "1.18.2",
