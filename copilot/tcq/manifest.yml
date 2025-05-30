@@ -37,7 +37,7 @@ network:
 #variables:                    # Pass environment variables as key value pairs.
 #  LOG_LEVEL: info
 variables:                    # Pass environment variables as key value pairs.
-  TCQ_GH_CALLBACK_URL: https://tcq.${COPILOT_ENVIRONMENT_NAME}.tcq-reloaded.tcq.ninja/auth/github/callback
+  TCQ_GH_CALLBACK_URL: https://tcq.${COPILOT_ENVIRONMENT_NAME}.tcq-reloaded.tcq-reloaded.com/auth/github/callback
   TCQ_DB_ADAPTER: dynamodb
   TCQ_SESSION_STORE_ADAPTER: dynamodb
   TCQ_DB_DYNAMODB_MEETINGS_TABLE:
