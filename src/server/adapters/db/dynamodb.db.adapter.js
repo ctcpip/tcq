@@ -52,12 +52,3 @@ module.exports = {
     updateMeeting,
     createMeeting
 }
-
-/*async function main() {
-    console.log('Main!');
-    await createMeeting({meet: 'testd', id:'462'});
-    console.log('Got meeting:', await getMeeting('462'));
-}
-
-main();
-*/
