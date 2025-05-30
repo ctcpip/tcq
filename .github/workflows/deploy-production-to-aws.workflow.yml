@@ -15,8 +15,8 @@ jobs:
   call-deploy-with-aws-copilot:
     uses: ./.github/workflows/deploy-with-aws-copilot.template.yml
     with:
-      environment: staging
-      deployUrl: https://staging.tcq-reloaded.com
+      environment: production
+      deployUrl: https://tcq-reloaded.com
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

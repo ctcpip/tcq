@@ -66,6 +66,13 @@ environments:
       alias: tcq-reloaded.com
     variables:
       TCQ_GH_CALLBACK_URL: https://tcq-reloaded.com/auth/github/callback
+  staging:
+    http:
+      path: '/'
+      alias: staging.tcq-reloaded.com
+    variables:
+      TCQ_GH_CALLBACK_URL: https://staging.tcq-reloaded.com/auth/github/callback
+
 #  test:
 #    count: 2               # Number of tasks to run for the "test" environment.
 #    deployment:            # The deployment strategy for the "test" environment.
