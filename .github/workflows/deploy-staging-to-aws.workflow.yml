@@ -6,12 +6,6 @@ on:
       - staging
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ inputs.stage }}
-      url: ${{ inputs.deployUrl }}
-
   call-deploy-with-aws-copilot:
     uses: ./.github/workflows/deploy-with-aws-copilot.template.yml
     with:
