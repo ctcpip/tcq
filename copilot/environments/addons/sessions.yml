@@ -1,0 +1,34 @@
+Parameters:
+  App:
+    Type: String
+    Description: Your application's name.
+  Env:
+    Type: String
+    Description: The name of the environment being deployed.
+
+Resources:
+  sessions:
+    Metadata:
+      'aws:copilot:description': 'An Amazon DynamoDB table for sessions'
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${App}-${Env}-sessions
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: "S"
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+Outputs:
+  sessionsName:
+    Description: "The name of this DynamoDB table."
+    Value: !Ref sessions
+    Export: 
+      Name: !Sub ${App}-${Env}-sessionsTableName
+  sessionsDynamoDBTableARN:
+    Description: "The ARN of the sessions DynamoDB table."
+    Value: !GetAtt sessions.Arn
+    Export: 
+      Name: !Sub ${App}-${Env}-sessionsTableArn
