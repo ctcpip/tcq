@@ -78,6 +78,7 @@
     "css-loader": "0.28.7",
     "extract-text-webpack-plugin": "3.0.2",
     "html-webpack-plugin": "2.30.1",
+    "madr": "4.0.0",
     "node-sass": "4.11.0",
     "replace-in-file": "7.2.0",
     "sass-loader": "6.0.6",
