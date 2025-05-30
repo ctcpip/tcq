@@ -2,8 +2,7 @@ const AWS = require('aws-sdk');
 
 const dynamodb = new AWS.DynamoDB();
 
-// TODO: rmv fallback
-const TABLE_NAME =  process.env['TCQ_DB_DYNAMODB_MEETINGS_TABLE'] || 'tcq-reloaded-staging-meetings';
+const TABLE_NAME =  process.env['TCQ_DB_DYNAMODB_MEETINGS_TABLE'];
 
 async function getMeeting(id) {
     return new Promise((resolve, reject) => {
@@ -11,8 +10,12 @@ async function getMeeting(id) {
             TableName: TABLE_NAME,
             Key: AWS.DynamoDB.Converter.marshall({ id })
         }, (err, data) => {
-            if (err) return reject(err);
-            if (!data.Item) return resolve(undefined);
+            if (err) {
+                return reject(err);
+            }
+            if (!data.Item) {
+                return resolve(undefined);
+            }
             resolve(AWS.DynamoDB.Converter.unmarshall(data.Item));
         });
     });
@@ -25,8 +28,16 @@ async function createMeeting(meeting) {
         ReturnConsumedCapacity: 'TOTAL',
         TableName: TABLE_NAME
     }, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
+        // TODO: think about more sophisticated error handling
+        // although the cosmosDB did not have any error handling either...
+        if (err) {
+            // an error occurred
+            console.log(err, err.stack);
+        }
+        else     {
+            // successful response
+            // console.log(data);
+        }
 
     });
     return meeting;
