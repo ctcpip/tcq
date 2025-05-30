@@ -39,16 +39,18 @@ network:
 variables:                    # Pass environment variables as key value pairs.
   TCQ_GH_CALLBACK_URL: https://tcq.${COPILOT_ENVIRONMENT_NAME}.tcq-reloaded.tcq.ninja/auth/github/callback
   TCQ_DB_ADAPTER: dynamodb
-  # TODO: change this to dynamodb, if we have a dynamodb adapter
-  TCQ_SESSION_STORE_ADAPTER: none
+  TCQ_SESSION_STORE_ADAPTER: dynamodb
   TCQ_DB_DYNAMODB_MEETINGS_TABLE:
     from_cfn: ${COPILOT_APPLICATION_NAME}-${COPILOT_ENVIRONMENT_NAME}-meetingsTableName
+  TCQ_SESSION_STORE_DYNAMODB_TABLE:
+    from_cfn: ${COPILOT_APPLICATION_NAME}-${COPILOT_ENVIRONMENT_NAME}-sessionsTableName
 
 secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
   TCQ_GH_SECRET: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/TCQ_GH_SECRET
   TCQ_SESSION_SECRET: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/TCQ_SESSION_SECRET
   TCQ_GH_ID: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/TCQ_GH_ID
 # uncomment the following lines to configure mongoDB URIs, if enabled as either db or session store
+# ...and make sure to set the secrets in SSM Parameter Store via copilot CLI with `copilot secret init`
 #  TCQ_DB_MONGODB_URI: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/TCQ_DB_MONGODB_URI
 #  TCQ_SESSION_STORE_MONGODB_URI: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/TCQ_DB_MONGODB_URI
 
