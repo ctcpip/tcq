@@ -1,0 +1,20 @@
+name: Restart Staging on AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task identifier (e.g. tcq)'
+        required: true
+        type: string
+        default: tcq
+
+jobs:
+  call-stop-task:
+    uses: ./.github/workflows/restart-service-for-stage.template.yml
+    with:
+      environment: staging
+      task: ${{ github.event.inputs.task }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
