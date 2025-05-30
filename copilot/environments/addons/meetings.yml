@@ -1,0 +1,34 @@
+Parameters:
+  App:
+    Type: String
+    Description: Your application's name.
+  Env:
+    Type: String
+    Description: The name of the environment being deployed.
+
+Resources:
+  meetings:
+    Metadata:
+      'aws:copilot:description': 'An Amazon DynamoDB table for meetings'
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${App}-${Env}-meetings
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: "S"
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+Outputs:
+  meetingsName:
+    Description: "The name of this DynamoDB table."
+    Value: !Ref meetings
+    Export: 
+      Name: !Sub ${App}-${Env}-meetingsTableName
+  meetingsDynamoDBTableARN:
+    Description: "The ARN of the meetings DynamoDB table."
+    Value: !GetAtt meetings.Arn
+    Export: 
+      Name: !Sub ${App}-${Env}-meetingsTableArn
