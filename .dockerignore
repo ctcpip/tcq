@@ -1,5 +1,6 @@
 *
 #currently we build manually...
+!assets
 !src
 !scripts
 !package.json
